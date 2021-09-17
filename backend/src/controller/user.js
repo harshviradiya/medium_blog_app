@@ -1,10 +1,12 @@
 const User = require("../model/user");
+const Blog = require("../model/blog");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 
 module.exports.register = async (req, res, next) => {
-  const { Firstname, Lastname, email, password, conformpassword } = req.body;
+  const { Firstname, Lastname, email, password, conformpassword, image } =
+    req.body;
   console.log(req.body);
 
   try {
@@ -64,6 +66,48 @@ module.exports.login = async (req, res, next) => {
         email: user.email,
       },
       message: "Login Successfully",
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: "error" });
+  }
+};
+module.exports.userdetails = async (req, res, next) => {
+  try {
+    const userid = req.params.id;
+    console.log("LLLLLLLLL", userid);
+    const user = await User.find({ _id: userid });
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(" backend error ");
+    next(error);
+  }
+};
+module.exports.userblogdetails = async (req, res, next) => {
+  try {
+    const userid = req.params.id;
+    console.log("LLLLLLLLL", userid);
+    const user = await Blog.find({ userId: userid });
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(" backend error ");
+    next(error);
+  }
+};
+module.exports.Updateuser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    console.log("!!!!!!!!!!!!!!!!!", id);
+    console.log("============+++++++++", req.file);
+
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    const userupdate = await User.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.send({
+      message: "Successfully Updated",
+      // userupdate,
     });
   } catch (error) {
     return res.status(400).json({ msg: "error" });
