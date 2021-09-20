@@ -3,24 +3,24 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 8000;
 const dotenv = require("dotenv").config();
-var bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 
 const router = express();
 // const userController = require("../src/controller/user");
 const user = require("./routes/user");
 const blog = require("./routes/blog");
+// app.use(require("connect").bodyParser());
 // const image = require("./routes/image");
 // const multiparty = require("connect-multiparty");
 // const multipartMiddleware = multiparty({ uploadDir: "./uploads " });
-
-app.use(bodyParser.urlencoded({ extended: true }));
+// var urlencodedParser = bodyParser.urlencoded({ extended: false });
+// app.use(express.urlencoded({ extended: true }));
 
 require("./db/connection");
 app.use(express.json());
-app.use(bodyParser.json());
+// app.use(express.bodyParser());
+// app.use(bodyParser.json());
 // router.use();
-
-// app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
 

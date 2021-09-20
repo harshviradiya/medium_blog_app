@@ -96,9 +96,9 @@ module.exports.userblogdetails = async (req, res, next) => {
 module.exports.Updateuser = async (req, res, next) => {
   try {
     const id = req.params.id;
-    console.log("!!!!!!!!!!!!!!!!!", id);
-    console.log("============+++++++++", req.file);
-
+    // console.log("!!!!!!!!!!!!!!!!!", id);
+    // console.log("============+++++++++", req.file);
+    console.log("iuiuiu", req.body);
     if (req.file) {
       req.body.image = req.file.path;
     }
@@ -107,7 +107,7 @@ module.exports.Updateuser = async (req, res, next) => {
     });
     res.send({
       message: "Successfully Updated",
-      // userupdate,
+      userupdate,
     });
   } catch (error) {
     return res.status(400).json({ msg: "error" });
